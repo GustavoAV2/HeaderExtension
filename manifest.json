@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Token Extractor",
+  "version": "1.0",
+  "description": "Extrai o token de autorização das requisições de rede.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "webRequestHeaders",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  }
+}
