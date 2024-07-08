@@ -11,8 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     copyButton.addEventListener('click', function() {
-        copyToClipboard(tokenText.textContent);
+        chrome.storage.local.get(['authToken'], function(result) {
+            var token = result.authToken;
+            copyToClipboard(token);
+        });
     });
+
+    var moreTokens = document.getElementById('more-tokens');
+    moreTokens.addEventListener('click', function(){
+        chrome.storage.local.get(['authToken'], function(result) {
+            var token = result.authToken;
+            var listTokens = document.getElementById('list-tokens');
+            
+            var html = ''
+            if (moreTokens.textContent == '+ More headers')
+
+            for (let header of details.requestHeaders) {
+                html += '<h2>' + header.name + '</h2>';
+                html += '<p id="token">' + header.value + '</p>';
+                if (header.name.toLowerCase() === 'authorization') {
+                    chrome.storage.local.set({ authToken: header.value })
+                }
+            }
+            listTokens.innerHTML = html;
+        });
+        moreTokens.textContent = 'Voltar';
+    })
 
     function copyToClipboard(text) {
         var tempInput = document.createElement("input");
@@ -24,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.execCommand("copy");
         document.body.removeChild(tempInput);
 
-        
         var copyButton = document.getElementById("copy-token");
         copyButton.textContent = "Token copiado!";
 
